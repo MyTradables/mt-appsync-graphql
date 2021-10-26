@@ -1,0 +1,48 @@
+name: PR
+
+on:
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  build:
+    name: Check AWS CDK Stack
+    environment: mytradables
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Current User
+        run: echo $GITHUB_ACTOR
+
+      - name: Check Out Repository
+        uses: actions/checkout@v2
+
+      - name: Check Out Node Version 14
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Add Registery Token
+        run: |
+          echo "@mytradables:registry=https://npm.pkg.github.com" >> $HOME/.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{secrets.MT_GITHUB_TOKEN}}" >> $HOME/.npmrc
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Stack
+        run: npm run build
+
+      - name: Lint Code
+        run: npm run lint
+
+      - name: Unit Tests
+        run: npm run test
+
+      - name: Deploy AWS CDK Stack
+        run: npm run check
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: 'eu-west-1'
