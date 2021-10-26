@@ -31,6 +31,11 @@
         "source-map-support": "^0.5.20"
     },
     "dependencies": {
-        "@aws-cdk/aws-lambda": "^1.129.0"
+        "@aws-cdk/aws-appsync": "^1.129.0",
+        "@aws-cdk/aws-cognito": "^1.129.0",
+        "@aws-cdk/aws-dynamodb": "^1.129.0",
+        "@aws-cdk/aws-kms": "^1.129.0",
+        "@aws-cdk/aws-lambda": "^1.129.0",
+        "@aws-cdk/aws-logs": "^1.129.0"
     }
 }

@@ -5,5 +5,7 @@ const environmentConfig: IMtAppsyncGraphqlStackProps = {
     Developer: 'Faruk Ada',
     Application: 'MyTradables.com',
   },
+  apikeyValidityInDays: 365,
+  kmsKeyArn: 'arn:partition:service:region:account-id:resource-type:resource-id',
 };
 export default environmentConfig;
